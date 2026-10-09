@@ -96,6 +96,9 @@ This avoids pretending that every hour of a six-month program can be predicted a
 ├── ROADMAP.md
 ├── ai-engineering/
 │   └── README.md
+├── docs/
+│   ├── repository-audit.md
+│   └── repository-audit-v2.1.md
 └── modules/
     ├── 01-advanced-sql-data-modeling/
     ├── 02-python-data-engineering/

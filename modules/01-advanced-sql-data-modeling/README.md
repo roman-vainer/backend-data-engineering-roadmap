@@ -37,11 +37,18 @@ By the end of Module 01, the learner should be able to:
 
 Move beyond CRUD-style SQL and become comfortable expressing complex data questions clearly and efficiently.
 
-### 1. SQL Server learning environment — 0.5 h
+### 1. SQL Server environment verification — 0.5 h
 
-- prepare the local SQL Server environment
-- create/import a reusable training database
-- establish a baseline folder/script structure for module exercises
+The learning environment should ideally be prepared before the first study session.
+
+Use this slot to:
+
+- verify that SQL Server and the chosen client work
+- create/import the reusable training database
+- verify connections and permissions
+- confirm the baseline folder/script structure for exercises
+
+If installation, configuration, permissions, or sample-data preparation takes materially longer than 0.5 h, treat the extra work as **setup contingency**, not as time taken away from the SQL learning tasks below.
 
 ### 2. Advanced JOINs and set operations — 1.5 h
 
@@ -126,6 +133,8 @@ Understand why a query is fast or slow and how SQL Server decides how to execute
 - why statistics matter
 - estimated vs actual rows
 - cardinality-estimation concepts
+
+**Teaching sequence:** Issues #7 and #8 are intentionally interleaved. Introduce statistics/cardinality and estimated-vs-actual rows while first learning to read execution plans; then use SARGability examples to deepen the analysis. Do not treat #7 and #8 as two completely isolated sequential blocks.
 
 ### 3. SARGability — 1.0 h
 
@@ -344,6 +353,6 @@ The README defines the learning path; GitHub Issues define concrete work and com
 Suggested issue sequence by week:
 
 - **Week 1:** [#1 Setup](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/1), [#2 JOINs](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/2), [#3 Aggregation](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/3), [#4 CTEs](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/4), [#5 Window functions](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/5)
-- **Week 2:** [#6 Indexes](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/6), [#7 Execution plans](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/7), [#8 Statistics/cardinality/SARGability](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/8)
+- **Week 2:** [#6 Indexes](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/6), [#7 Execution plans](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/7) + [#8 Statistics/cardinality/SARGability](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/8) **interleaved**, not strictly sequential
 - **Week 3:** [#9 Transactions](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/9), [#10 Isolation](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/10), [#11 Locking/deadlocks](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/11)
 - **Week 4:** [#12 OLTP modeling](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/12), [#13 Dimensional modeling/SCD](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/13), [#14 Cumulative module review](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/14)
