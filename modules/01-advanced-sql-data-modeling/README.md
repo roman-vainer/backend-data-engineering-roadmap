@@ -17,10 +17,11 @@ By the end of Module 01, the learner should be able to:
 
 - write and reason about non-trivial SQL queries
 - use JOINs, set operators, CTEs, recursive CTEs, aggregations and window functions confidently
-- read actual execution plans and identify common performance problems
+- read actual execution plans and connect estimates to statistics/cardinality
 - explain and justify SQL Server indexing choices
-- understand statistics, cardinality and SARGability at a practical level
+- understand SARGability at a practical level
 - reason about transactions, isolation levels and concurrency anomalies
+- distinguish locking-based READ COMMITTED from SQL Server row-versioning options such as READ_COMMITTED_SNAPSHOT and SNAPSHOT
 - reproduce blocking and deadlock scenarios and explain mitigation strategies
 - design a normalized OLTP model with appropriate constraints
 - derive an analytical star schema from an operational model
@@ -110,7 +111,7 @@ Understand why a query is fast or slow and how SQL Server decides how to execute
 - selectivity
 - write-cost trade-offs
 
-### 2. Execution plans — 2.0 h
+### 2. Execution plans, estimates & statistics — 2.5 h
 
 - estimated vs actual execution plan
 - table scan
@@ -122,11 +123,12 @@ Understand why a query is fast or slow and how SQL Server decides how to execute
 - merge join
 - sorts
 - warning signs and expensive operators
-
-### 3. Statistics, cardinality & SARGability — 1.5 h
-
 - why statistics matter
+- estimated vs actual rows
 - cardinality-estimation concepts
+
+### 3. SARGability — 1.0 h
+
 - predicates that prevent efficient index use
 - functions on indexed columns
 - implicit conversions
@@ -136,6 +138,7 @@ Understand why a query is fast or slow and how SQL Server decides how to execute
 
 - establish a baseline
 - inspect execution plan
+- compare estimates with actual behavior
 - identify the bottleneck
 - change query/index design
 - compare before/after behavior
@@ -155,7 +158,7 @@ Explain one tuning case from problem to evidence to solution.
 
 ### Week 2 outcome
 
-The learner can inspect an actual execution plan, recognize common access patterns, propose a justified optimization and verify whether it actually helped.
+The learner can inspect an actual execution plan, interpret important estimated/actual differences, recognize common access patterns, propose a justified optimization, and verify whether it actually helped.
 
 ---
 
@@ -185,7 +188,9 @@ Understand correctness when multiple operations and users access the same data c
 - READ COMMITTED
 - REPEATABLE READ
 - SERIALIZABLE
-- snapshot/versioning concepts in SQL Server
+- SQL Server row-versioning concepts
+- READ_COMMITTED_SNAPSHOT
+- SNAPSHOT isolation
 
 ### 3. Locking and blocking — 1.5 h
 
@@ -193,6 +198,7 @@ Understand correctness when multiple operations and users access the same data c
 - lock duration
 - blocking chains
 - practical impact of indexes on locking behavior
+- contrast locking behavior with row-versioned reads where appropriate
 
 ### 4. Deadlocks — 1.0 h
 
@@ -203,13 +209,14 @@ Understand correctness when multiple operations and users access the same data c
 
 ### 5. Concurrency lab — 1.5 h
 
-Use two concurrent SQL sessions to reproduce:
+Use two concurrent SQL sessions to reproduce and document:
 
 - blocking
 - at least one isolation anomaly
 - a deadlock or controlled deadlock-style scenario
+- one explicit comparison involving a row-versioning option where the environment allows it
 
-Document what happened and why.
+Document the expected outcome, the observed outcome, and why it happened.
 
 ### 6. Weekly review — 0.5 h
 
@@ -272,24 +279,27 @@ Learn to design data structures for their workload rather than using one schema 
 - Type 3 conceptually
 - choosing a history strategy
 
-### 6. Final practical assignment — 1.0 h
+### 6. Cumulative final review & presentation — 1.0 h
 
-Create a compact end-to-end model:
+The final review does **not** require creating the whole module assignment from scratch.
+
+Artifacts are accumulated throughout Weeks 1–4. The final hour is used to assemble and present evidence such as:
 
 - normalized OLTP schema
-- several non-trivial analytical queries
-- selected indexes with justification
+- non-trivial queries from Week 1
+- indexing/tuning evidence and execution-plan analysis from Week 2
+- concurrency evidence from Week 3
 - derived star schema
 - one SCD decision
-- short explanation of trade-offs
+- concise explanation of the main trade-offs
 
-### 7. Module review & Definition of Done — 0.5 h
+### 7. Definition-of-Done check — 0.5 h
 
-Review the final assignment against the module criteria.
+Review the accumulated artifacts against the module criteria and identify any gap that still needs remediation.
 
 ### Week 4 outcome
 
-The learner can explain why an operational schema and an analytical schema for the same business domain should often look different.
+The learner can explain why an operational schema and an analytical schema for the same business domain should often look different and can connect the four weeks of work into one coherent engineering story.
 
 ---
 
@@ -299,6 +309,7 @@ The learner can explain why an operational schema and an analytical schema for t
 - Every optimization claim should be supported by an execution plan, measurements, or both.
 - Every schema decision should have a stated reason.
 - Exercises should use realistic relational data rather than isolated one-table examples.
+- Build artifacts cumulatively; do not postpone the entire module deliverable to the final hour.
 - AI may suggest solutions, but the learner must validate and be able to explain the accepted result.
 - Notes should capture conclusions and engineering reasoning, not copy textbook material.
 
@@ -310,18 +321,29 @@ Module 01 is complete when the learner can independently:
 
 - solve a complex query using appropriate JOIN, CTE, aggregation and window-function patterns
 - read an actual SQL Server execution plan and explain the main operators
+- connect important estimated/actual row differences to statistics/cardinality concepts
 - explain why SQL Server chooses a scan or seek in a concrete example
 - design and justify clustered/nonclustered indexes for a workload
 - recognize common non-SARGable patterns
 - explain transaction boundaries and the main isolation-level trade-offs
+- distinguish locking-based reads from SQL Server row-versioning options at a practical level
 - reproduce and explain blocking and common concurrency anomalies
 - explain how a deadlock can arise and how to reduce its probability
 - design a normalized OLTP schema with database constraints
 - define the grain of an analytical fact table
 - design a star schema with facts and dimensions
 - choose an appropriate SCD strategy for a concrete requirement
-- present the final practical assignment without relying on generated explanations
+- present the cumulative module artifacts without relying on generated explanations
 
 ## Tracking
 
-Detailed work is tracked through GitHub Issues for this module. The README defines the learning path; Issues define the concrete work and completion criteria.
+The README defines the learning path; GitHub Issues define concrete work and completion criteria.
+
+**Milestone:** [M01 — Advanced SQL & Data Modeling](https://github.com/roman-vainer/backend-data-engineering-roadmap/milestone/1)
+
+Suggested issue sequence by week:
+
+- **Week 1:** [#1 Setup](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/1), [#2 JOINs](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/2), [#3 Aggregation](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/3), [#4 CTEs](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/4), [#5 Window functions](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/5)
+- **Week 2:** [#6 Indexes](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/6), [#7 Execution plans](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/7), [#8 Statistics/cardinality/SARGability](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/8)
+- **Week 3:** [#9 Transactions](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/9), [#10 Isolation](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/10), [#11 Locking/deadlocks](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/11)
+- **Week 4:** [#12 OLTP modeling](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/12), [#13 Dimensional modeling/SCD](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/13), [#14 Cumulative module review](https://github.com/roman-vainer/backend-data-engineering-roadmap/issues/14)
